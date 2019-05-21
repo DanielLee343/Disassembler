@@ -2,7 +2,7 @@
 
 This is one of the three projects in the course BU MET CS472, which requires us to obtain a solid understanding of disassembler in computer architecture and how it works.
 
-### **Goal:**
+### Goal:
 
 The project is to write a partial disassembler for MIPS instructions. That is, the input will be the 32-bit machine instructions that a compiler or assembler produces.  The program then figures out what the original source instructions were that created those 32-bit machine instructions and outputs them.  The possible source instructions that you must be able to disassemble are: add, sub, and, or, slt, lw, sw, beq, bne. 
 
@@ -18,7 +18,7 @@ The "shamt" field in R-type instructions can always be assumed to be all zeroes.
 
 
 
-Steps:
+### Steps:
 
 Due to the simple structure of the project, I implemented it in just one C++ file which only contains the main method.
 
@@ -30,38 +30,44 @@ Due to the simple structure of the project, I implemented it in just one C++ fil
 
 
 
-Problems and Solutions:
+### Problems and Solutions:
 
-1.P:
+1. P:
 
-At first I found it quite hard to get the opcode, src1, etc., since I had no idea about 'Bitwise And'.
+   At first I found it quite hard to get the opcode, src1, etc., since I had no idea about 'Bitwise And'.
 
-S: Bitwise And
+   S: Bitwise And
 
-Basically, 'Bitwise And' is an mathematical algorithms that is used to get particular bits within a number while ignoring other bits. Take a look at the following instruction: 
+   Basically, 'Bitwise And' is an mathematical algorithms that is used to get particular bits within a number while ignoring other bits. Take a look at the following instruction: 
 
-**opcode[i] = (intr[i] & 0xFC000000) >> 26;**
+   **opcode[i] = (intr[i] & 0xFC000000) >> 26;**
 
-We implement '&' operation to each instruction and 0xFC000000 (which stands for six '1' in the most significant bits while '0' for others) and we will get the six most significant bits in each instruction while other bits will get into all zeros. Because 1 & 1 = 1 while 1 & 0 = 0. 
+   We implement '&' operation to each instruction and 0xFC000000 (which stands for six '1' in the most significant bits while '0' for others) and we will get the six most significant bits in each instruction while other bits will get into all zeros. Because 1 & 1 = 1 while 1 & 0 = 0. 
 
-Then, we use '>>' operation to shift each instruction 26 bits in order to get the first six most significant bits. This is how we decode each instruction.
+   Then, we use '>>' operation to shift each instruction 26 bits in order to get the first six most significant bits. This is how we decode each instruction.
 
 
 
-2.P: 
+2. P: 
 
-For branch instructions, we also need to calculate target address for each instruction, which I initially found quite complex.
+   For branch instructions, we also need to calculate target address for each instruction, which I initially found quite complex.
 
-S:
+   S:
 
-For simplicity, we use the following statement:
+​	For simplicity, we use the following statement:
 
-**int targetadd1 = (offset[i]<<2)+4+init;** 
+​	int targetadd1 = (offset[i]<<2)+4+init;
 
 When an offset is shifted two bits to the left, it is multiplied by 4 and when the result is added another 4, we will get the exact distance between the current address and the target address (could be positive or negative). The target address will be easy to find if we then add the distance to current address.
 
 
 
-**Conclusion:**
+### Conclusion:
 
 This project is quite easy to implement for the very first project in this class. To get a full mark, it still requires a complete understanding of disassembler in computer architecture. What I really learned is 'Bitwise And' and the way to figure out target address for branch instruction, which I had misunderstood during class. The next two projects, which are about cache and pipeline, are much harder and complex in both logical understanding and skills of using data structure during coding.
+
+
+
+### Output：
+
+![result](E:\课程资料\波士顿大学课程\周二计组\project1\result.png)
